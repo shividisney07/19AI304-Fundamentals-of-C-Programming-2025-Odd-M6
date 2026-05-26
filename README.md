@@ -8,7 +8,7 @@
 | Input | Output                                       |
 |-------|----------------------------------------------|
 | 1     | 101.25&nbsp;&nbsp;201.50&nbsp;&nbsp;301.75&nbsp;&nbsp;402.00&nbsp;&nbsp;502.75 |
-# Date : 
+# Date : 26.05.2026
 # Aim:
 To develop a C program using the static storage class in a function with a parameter and without a return value to display the required output.
 # Algorithm:
@@ -33,7 +33,31 @@ To develop a C program using the static storage class in a function with a param
 ### Step 8:
   Stop
 # Program:
+```
+#include <stdio.h>
+
+void generate(int n) {
+    static float value = 1.25;
+
+    for (int i = 1; i <= n; i++) {
+        printf("%.2f ", 100 * i + value);
+        value += 0.25;
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    generate(5);
+
+    return 0;
+}
+```
 # Output:
+<img width="1383" height="664" alt="image" src="https://github.com/user-attachments/assets/4bdda36b-6dd3-49ce-b531-1dd2d61fc3c5" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -79,7 +103,44 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 11:
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+int mul(int a, int b) { return a * b; }
+int divi(int a, int b) { return a / b; }
+
+int main() {
+    int a, b, choice;
+    int (*func)(int, int);
+
+    scanf("%d %d", &a, &b);
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1: func = add; break;
+        case 2: func = sub; break;
+        case 3: func = mul; break;
+        case 4: func = divi; break;
+        default:
+            printf("Invalid choice");
+            return 0;
+    }
+
+    if (choice == 4 && b == 0) {
+        printf("Division by zero error");
+        return 0;
+    }
+
+    printf("Result = %d", func(a, b));
+
+    return 0;
+}
+```
 # Output:
+<img width="1436" height="762" alt="image" src="https://github.com/user-attachments/assets/2d18d75b-b7a0-490f-b1dc-d18eff695f08" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -87,7 +148,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:28
   Develop a C program to store details of n employees (employee number, name, and salary) using structures, and display the employee(s) with the highest salary.
-# Date : 
+# Date :  
 # Aim:
   To develop and implement a C program that uses a structure to store employee details (employee number, name, and salary) and determine the employee(s) with the highest salary.
 # Algorithm:
@@ -123,7 +184,45 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+```
+#include <stdio.h>
+
+struct Employee {
+    int empno;
+    char name[50];
+    float salary;
+};
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    struct Employee emp[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d %s %f", &emp[i].empno, emp[i].name, &emp[i].salary);
+    }
+
+    float max = emp[0].salary;
+
+    for (int i = 1; i < n; i++) {
+        if (emp[i].salary > max) {
+            max = emp[i].salary;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (emp[i].salary == max) {
+            printf("%d %s %.2f\n", emp[i].empno, emp[i].name, emp[i].salary);
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="1196" height="670" alt="image" src="https://github.com/user-attachments/assets/dc1dd7bc-fa67-4582-9738-a4c1fe4c1092" />
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -132,7 +231,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:29
   Create the C program to calculate the present age of a person by passing structure as a reference.
-# Date : 
+# Date :  
 # Aim:
   To create a C program that uses a structure to store the current date and birth date, and to calculate the person’s present age in years, months, and days by passing the structure as a reference.
 # Algorithm:
@@ -166,7 +265,32 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9:
   Stop
 # Program:
+```
+#include <stdio.h>
+struct Date {
+    int day, month, year;
+};
+void calculateAge(struct Date *dob, struct Date *current, int *age) {
+    *age = current->year - dob->year;
+
+    if (current->month < dob->month || 
+       (current->month == dob->month && current->day < dob->day)) {
+        (*age)--;
+    }
+}
+int main() {
+    struct Date dob, current;
+    int age;
+    scanf("%d %d %d", &dob.day, &dob.month, &dob.year);
+    scanf("%d %d %d", &current.day, &current.month, &current.year);
+    calculateAge(&dob, &current, &age);
+    printf("Age = %d", age);
+    return 0;
+}
+```
 # Output:
+<img width="1178" height="657" alt="image" src="https://github.com/user-attachments/assets/38f387a9-7c93-498f-836d-9254374ca25c" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -175,7 +299,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:30
   Build a C program to demonstrate the use of a pointer to a union. Store an integer value in a union, access it using a union pointer, and display it as both an integer and a character.
-# Date : 
+# Date :      
 # Aim:
   To build a program in C that uses a pointer to a union to store an integer value and display it in both integer and character format.
 # Algorithm:
@@ -202,7 +326,30 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+```
+#include <stdio.h>
+
+union Data {
+    int i;
+    char c;
+};
+
+int main() {
+    union Data d;
+    union Data *ptr;
+
+    ptr = &d;
+
+    ptr->i = 65;
+
+    printf("As Integer: %d\n", ptr->i);
+    printf("As Character: %c\n", ptr->i);
+
+    return 0;
+}
+```
 # Output:
+<img width="1328" height="571" alt="image" src="https://github.com/user-attachments/assets/7a769f37-ad96-489d-96eb-59802fc24116" />
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
